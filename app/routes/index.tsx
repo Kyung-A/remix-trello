@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import Card from './components/Card';
@@ -6,12 +6,10 @@ import List from './components/List';
 import CreateListForm from './components/CreateList';
 
 export default function Index() {
-  const defaultValues = useMemo(() => {
-    return { list: [{ list_title: 'blabla' }] };
-  }, []);
+  const [data, setData] = useState({ list: [{ list_title: 'blabla' }] });
 
   const methods = useForm({
-    defaultValues,
+    defaultValues: data,
   });
   const [openCreateListForm, setOpenCreateListForm] = useState(false);
 
@@ -23,9 +21,10 @@ export default function Index() {
     return setOpenCreateListForm(false);
   }, []);
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    methods.reset({ ...defaultValues, ...data });
+  const onSubmit = (formData: any) => {
+    console.log(formData);
+    methods.reset({ ...data, ...formData });
+    setData(formData);
     setOpenCreateListForm(false);
   };
 
@@ -42,7 +41,7 @@ export default function Index() {
             onClickOpen={onClickOpenCreateListForm}
             openCreateListForm={openCreateListForm}
             onSubmit={onSubmit}
-            defaultValues={defaultValues}
+            data={data ?? []}
           />
         </form>
       </FormProvider>

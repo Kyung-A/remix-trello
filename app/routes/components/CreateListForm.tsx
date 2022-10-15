@@ -5,14 +5,14 @@ import type { ICreateListProps } from './CreateList';
 const CreateListForm = ({
   onClickCancel,
   onSubmit,
-  defaultValues,
+  data,
 }: ICreateListProps) => {
-  const { register } = useFormContext();
+  const { register, handleSubmit, setValue } = useFormContext();
 
   return (
     <div className="w-full p-2 bg-gray-200 rounded-sm">
       <input
-        {...register(`list.${defaultValues?.list?.length}.list_title`)}
+        {...register(`list.${data.list.length}.list_title`)}
         type="text"
         className="w-full px-2 py-1 mb-2 border-2 rounded-sm border-sky-600 focus:outline-none placeholder:text-sm"
         placeholder="Enter list title..."
@@ -21,7 +21,10 @@ const CreateListForm = ({
       <div className="flex items-center">
         <button
           type="submit"
-          onSubmit={onSubmit}
+          onSubmit={() => {
+            setValue(`list.${data.list.length}.list_title`, '');
+            handleSubmit((data) => onSubmit(data))();
+          }}
           className="px-3 py-2 text-sm text-white rounded-sm bg-sky-600"
         >
           Add list

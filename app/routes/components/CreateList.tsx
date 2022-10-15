@@ -4,9 +4,9 @@ export interface ICreateListProps {
   openCreateListForm?: boolean;
   onClickCancel?: () => void;
   onClickOpen?: () => void;
-  onSubmit?: (data: any) => void;
+  onSubmit: (data: any) => void;
   name?: string;
-  defaultValues?: any;
+  data?: any;
 }
 
 const CreateListButton = ({
@@ -14,7 +14,7 @@ const CreateListButton = ({
   onClickCancel,
   onClickOpen,
   onSubmit,
-  defaultValues,
+  data,
 }: ICreateListProps) => {
   return (
     <div className="w-[272px]">
@@ -22,7 +22,7 @@ const CreateListButton = ({
         <CreateListForm
           onClickCancel={onClickCancel}
           onSubmit={onSubmit}
-          defaultValues={defaultValues}
+          data={data}
         />
       ) : (
         <button
