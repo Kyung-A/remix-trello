@@ -1,11 +1,20 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-interface IListProps {
+import Card from './Card';
+
+export interface IListProps {
   onSubmit: (data: any) => void;
-  children: React.ReactNode;
+  onClickCancel: () => void;
+  onClickOpen: () => void;
+  openCreateLCardForm: boolean;
 }
 
-const List = ({ children, onSubmit }: IListProps) => {
+const List = ({
+  onSubmit,
+  onClickOpen,
+  onClickCancel,
+  openCreateLCardForm,
+}: IListProps) => {
   const { register, control, setValue, watch, handleSubmit } = useFormContext();
 
   const { fields, update } = useFieldArray({
@@ -54,8 +63,16 @@ const List = ({ children, onSubmit }: IListProps) => {
               </svg>
             </button>
           </div>
-          <ul>{children}</ul>
+          <ul>
+            <Card
+              onClickOpen={onClickOpen}
+              onClickCancel={onClickCancel}
+              openCreateLCardForm={openCreateLCardForm}
+              nestIndex={index}
+            />
+          </ul>
           <button
+            onClick={onClickOpen}
             type="button"
             className="box-border flex items-center w-full p-1 rounded-sm hover:bg-gray-300"
           >
