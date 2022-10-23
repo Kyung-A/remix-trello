@@ -6,9 +6,8 @@ import CreateListForm from './components/CreateList';
 
 export default function Index() {
   const [openCreateListForm, setOpenCreateListForm] = useState(false);
-  const [openCreateLCardForm, setOpenCreateCardForm] = useState(false);
   const [data, setData] = useState({
-    list: [{ list_title: 'blabla', card: [{ description: '' }] }],
+    list: [{ list_title: 'blabla', card: [] }],
   });
 
   const methods = useForm({
@@ -21,14 +20,6 @@ export default function Index() {
 
   const onClickCancelCreateListForm = useCallback(() => {
     return setOpenCreateListForm(false);
-  }, []);
-
-  const onClickOpenCreateCardForm = useCallback(() => {
-    return setOpenCreateCardForm(true);
-  }, []);
-
-  const onClickCancelCreateCardForm = useCallback(() => {
-    return setOpenCreateCardForm(false);
   }, []);
 
   const onSubmit = (formData: any) => {
@@ -45,12 +36,7 @@ export default function Index() {
           onSubmit={methods.handleSubmit(onSubmit)}
           className="flex items-start"
         >
-          <List
-            onSubmit={onSubmit}
-            onClickOpen={onClickOpenCreateCardForm}
-            onClickCancel={onClickCancelCreateCardForm}
-            openCreateLCardForm={openCreateLCardForm}
-          />
+          <List onSubmit={onSubmit} data={data ?? []} />
           <CreateListForm
             onClickCancel={onClickCancelCreateListForm}
             onClickOpen={onClickOpenCreateListForm}

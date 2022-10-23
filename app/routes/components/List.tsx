@@ -4,17 +4,10 @@ import Card from './Card';
 
 export interface IListProps {
   onSubmit: (data: any) => void;
-  onClickCancel: () => void;
-  onClickOpen: () => void;
-  openCreateLCardForm: boolean;
+  data: any;
 }
 
-const List = ({
-  onSubmit,
-  onClickOpen,
-  onClickCancel,
-  openCreateLCardForm,
-}: IListProps) => {
+const List = ({ onSubmit, data }: IListProps) => {
   const { register, control, setValue, watch, handleSubmit } = useFormContext();
 
   const { fields, update } = useFieldArray({
@@ -63,35 +56,7 @@ const List = ({
               </svg>
             </button>
           </div>
-          <ul>
-            <Card
-              onClickOpen={onClickOpen}
-              onClickCancel={onClickCancel}
-              openCreateLCardForm={openCreateLCardForm}
-              nestIndex={index}
-            />
-          </ul>
-          <button
-            onClick={onClickOpen}
-            type="button"
-            className="box-border flex items-center w-full p-1 rounded-sm hover:bg-gray-300"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-4 h-4 text-neutral-600"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 6v12m6-6H6"
-              />
-            </svg>
-            <span className="pl-1 text-sm text-neutral-600">Add a card</span>
-          </button>
+          <Card nestIndex={index} data={data} onSubmit={onSubmit} />
         </div>
       ))}
     </>
