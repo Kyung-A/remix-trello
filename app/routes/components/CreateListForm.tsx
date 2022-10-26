@@ -14,6 +14,7 @@ const CreateListForm = ({
       <input
         {...register(`list.${data.list.length}.list_title`)}
         type="text"
+        required
         className="w-full px-2 py-1 mb-2 border-2 rounded-sm border-sky-600 focus:outline-none placeholder:text-sm"
         placeholder="Enter list title..."
         autoFocus

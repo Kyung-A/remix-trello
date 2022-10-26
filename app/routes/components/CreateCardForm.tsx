@@ -26,6 +26,7 @@ const CreateCardFrom = ({ nestIndex, data, onSubmit }: ICardProps) => {
               }].description`
             )}
             placeholder="내용을 입력해주세요."
+            required
             className="box-border w-full h-24 px-2 py-1 mb-1 shadow-md resize-none"
             autoFocus
           ></textarea>

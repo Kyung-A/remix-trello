@@ -11,7 +11,7 @@ export interface ICardProps {
 
 const Card = ({ nestIndex, data, onSubmit }: ICardProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const { control, setValue, watch, handleSubmit } = useFormContext();
+  const { control, setValue, watch, handleSubmit, setError } = useFormContext();
 
   useEffect(() => {
     const handleClickOutside = (e: any) => {
@@ -33,6 +33,7 @@ const Card = ({ nestIndex, data, onSubmit }: ICardProps) => {
             <Controller
               control={control}
               name={`list[${nestIndex}].card[${index}].description`}
+              rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <>
                   {!watch(`list[${nestIndex}].card[${index}].opened`) ? (
@@ -74,17 +75,34 @@ const Card = ({ nestIndex, data, onSubmit }: ICardProps) => {
                         onChange={onChange}
                         placeholder="내용을 입력해주세요."
                         className="box-border w-full h-24 px-2 py-1 mb-1 shadow-md resize-none"
+                        required
                         autoFocus
                       ></textarea>
                       <div className="flex items-center">
                         <button
                           type="submit"
                           onClick={() => {
-                            setValue(
-                              `list[${nestIndex}].card[${index}].opened`,
-                              false
-                            );
-                            handleSubmit((data) => onSubmit(data))();
+                            if (
+                              watch(
+                                `list[${nestIndex}].card[${index}].description`
+                              ) === ''
+                            ) {
+                              setError(
+                                `list[${nestIndex}].card[${index}].description`,
+                                {
+                                  type: 'custom',
+                                },
+                                {
+                                  shouldFocus: true,
+                                }
+                              );
+                            } else {
+                              setValue(
+                                `list[${nestIndex}].card[${index}].opened`,
+                                false
+                              );
+                              handleSubmit((data) => onSubmit(data))();
+                            }
                           }}
                           className="px-3 py-2 text-sm text-white rounded-sm bg-sky-600"
                         >
@@ -92,6 +110,16 @@ const Card = ({ nestIndex, data, onSubmit }: ICardProps) => {
                         </button>
                         <button
                           onClick={() => {
+                            if (
+                              watch(
+                                `list[${nestIndex}].card[${index}].description`
+                              ) === ''
+                            ) {
+                              setValue(
+                                `list[${nestIndex}].card[${index}].description`,
+                                _.description
+                              );
+                            }
                             setValue(
                               `list[${nestIndex}].card[${index}].opened`,
                               false

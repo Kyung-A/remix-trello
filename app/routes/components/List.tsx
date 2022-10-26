@@ -36,6 +36,7 @@ const List = ({ onSubmit, data }: IListProps) => {
                 });
                 handleSubmit((data) => onSubmit(data))();
               }}
+              required
               type="text"
               className="box-border w-full px-2 py-1 text-black bg-gray-200 focus:bg-transparent focus:bg-white focus:outline-sky-600"
             />
