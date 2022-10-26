@@ -17,54 +17,52 @@ const CreateCardFrom = ({ nestIndex, data, onSubmit }: ICardProps) => {
     <>
       {opened && (
         <div className="mb-3">
-          <div>
-            <textarea
-              {...register(
-                `list[${nestIndex}].card[${
-                  _.isEmpty(data.list[nestIndex].card)
-                    ? 0
-                    : data?.list[nestIndex]?.card?.length
-                }].description`
-              )}
-              placeholder="내용을 입력해주세요."
-              className="box-border w-full h-24 px-2 py-1 mb-1 shadow-md resize-none"
-              autoFocus
-            ></textarea>
-            <div className="flex items-center">
-              <button
-                type="submit"
-                onSubmit={() => {
-                  handleSubmit((data) => onSubmit(data))();
-                  setOpen(false);
-                }}
-                className="px-3 py-2 text-sm text-white rounded-sm bg-sky-600"
+          <textarea
+            {...register(
+              `list[${nestIndex}].card[${
+                _.isEmpty(data.list[nestIndex].card)
+                  ? 0
+                  : data?.list[nestIndex]?.card?.length
+              }].description`
+            )}
+            placeholder="내용을 입력해주세요."
+            className="box-border w-full h-24 px-2 py-1 mb-1 shadow-md resize-none"
+            autoFocus
+          ></textarea>
+          <div className="flex items-center">
+            <button
+              type="submit"
+              onSubmit={() => {
+                handleSubmit((data) => onSubmit(data))();
+                setOpen(false);
+              }}
+              className="px-3 py-2 text-sm text-white rounded-sm bg-sky-600"
+            >
+              Add card
+            </button>
+            <button
+              onClick={() => {
+                remove(data.list[nestIndex].card.length);
+                setOpen(false);
+              }}
+              type="button"
+              className="box-border px-1 ml-1"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-7 h-7 text-neutral-700"
               >
-                Add card
-              </button>
-              <button
-                onClick={() => {
-                  remove(data.list[nestIndex].card.length);
-                  setOpen(false);
-                }}
-                type="button"
-                className="box-border px-1 ml-1"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-7 h-7 text-neutral-700"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       )}
@@ -73,7 +71,7 @@ const CreateCardFrom = ({ nestIndex, data, onSubmit }: ICardProps) => {
         <button
           onClick={() => {
             setOpen(true);
-            append({ description: '' });
+            append({ description: '', opened: false });
           }}
           type="button"
           className="box-border flex items-center w-full p-1 rounded-sm hover:bg-gray-300"
